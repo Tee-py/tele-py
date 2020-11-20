@@ -16,17 +16,22 @@ class DataBase:
     
     def collection_exist(self, name):
         data = self.load()
-        collection_filter = filter(lambda obj:obj.get(name)!="",data)
+        def filter_func(obj, name):
+            try:
+                obj[name]
+                return True
+            except:
+                return False
+        collection_filter = filter(lambda obj:filter_func(obj, name),data)
         #print(collection_filter)
-        if len(list(collection_filter)) > 0:
-            return True
-        return False
-
+        if len(list(collection_filter)) == 0:
+            return False
+        return True
 
     def create_collection(self, collection_name):
         try:
             if self.collection_exist(collection_name):
-                return True, "Collection Already Exist in the Database"
+                return True, f"Collection: {collection_name} Already Exist in the Database"
             data = self.load()
             data.append({collection_name: []})
             self.dump(data)

@@ -1,5 +1,23 @@
 [
     {
         "User": []
+    },
+    {
+        "Images": []
+    },
+    {
+        "Students": []
+    },
+    {
+        "Teachers": []
+    },
+    {
+        "Country": []
+    },
+    {
+        "States": []
+    },
+    {
+        "News": []
     }
 ]
