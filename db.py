@@ -18,12 +18,11 @@ class DataBase:
     def create_collection(cls, collection_name):
         pass
 
-    def load_db(self):
+    def load(self):
         try:
             with open(self._file_name) as db:
                 data = json.load(db)
-                print(data)
-                return True
+                return data
         except:
             return False
 
