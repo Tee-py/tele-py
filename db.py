@@ -39,6 +39,13 @@ class DataBase:
         except:
             return False
 
+    def delete_collection(self, collection_name):
+        if not self.collection_exist(collection_name):
+            return f"Collection: {collection_name} does not Exist In the Database"
+        new_data = filter(lambda obj:list(obj.keys())[0] != collection_name, self.load())
+        self.dump(list(new_data))
+        return f"Collection: {collection_name} deleted from DataBase Successfully"
+
     def load(self):
         with open(self._file_name) as db:
             data = json.load(db)
