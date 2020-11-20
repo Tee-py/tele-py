@@ -23,6 +23,9 @@ for col in col_lst:
     print(db.create_collection(col))
 
 #Testing Saving Objects
-print(db.save_object("Saviours", {"name": "Hello"}))
-print(db.save_object("Saviours", {"name": "Helo"}))
+print(db.save_object("Saviours", {"id": "Hello"}))
+print(db.save_object("Saviours", {"id": "Hello", "status": "Wealthy"}))
+print(db.save_object("Saviours", {"id": "Hel", "status": "Wealthy"}))
 print(db.save_object("User", {"id":"162tebwejknevhk", "chat_id": "31456789", "name": "Emmanuel"}))
+print(db.save_object("User", {"id":"162tebwejknevhk", "chat_id": "31456789", "name": "Teepy"}))
+print(db.save_object("User", {"id":"162tebwejevhk", "chat_id": "31456789", "name": "Teepy"}))

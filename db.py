@@ -6,13 +6,30 @@ class DataBase:
     def __init__(self, file_name):
         self._file_name = file_name
 
+    def object_already_exist(self, object, collection_name):
+        data = self.load()
+        #print(object["id"])
+        collection = list(filter(lambda obj:list(obj.keys())[0]==collection_name, data))[0]
+        data_exist = list(filter(lambda obj:obj["id"]==object["id"], collection[collection_name]))
+        if data_exist:
+            position = collection[collection_name].index(data_exist[0])
+            collection[collection_name][position] = object
+            #print("Data Exists")
+            return True, collection
+        collection[collection_name].append(object)
+        #print("Doesn't Exist")
+        return False, collection
+
+
+
     def save_object(self, collection_name, data):
         if not self.collection_exist(collection_name):
             self.create_collection(collection_name)
+        exists, collection = self.object_already_exist(data, collection_name)
         dat = self.load()
-        collection = list(filter(lambda obj:list(obj.keys())[0]==collection_name, dat))[0]
-        position = dat.index(collection)
-        collection[collection_name].append(data)
+        saved_collection = list(filter(lambda obj:list(obj.keys())[0]==collection_name, dat))[0]
+        position = dat.index(saved_collection)
+        #collection[collection_name].append(data)
         dat[position] = collection
         self.dump(dat)
         return True

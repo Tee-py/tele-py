@@ -4,7 +4,12 @@
             {
                 "id": "162tebwejknevhk",
                 "chat_id": "31456789",
-                "name": "Emmanuel"
+                "name": "Teepy"
+            },
+            {
+                "id": "162tebwejevhk",
+                "chat_id": "31456789",
+                "name": "Teepy"
             }
         ]
     },
@@ -29,10 +34,12 @@
     {
         "Saviours": [
             {
-                "name": "Hello"
+                "id": "Hello",
+                "status": "Wealthy"
             },
             {
-                "name": "Helo"
+                "id": "Hel",
+                "status": "Wealthy"
             }
         ]
     }
