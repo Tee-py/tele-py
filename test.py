@@ -5,5 +5,6 @@ db = DataBase("db.json")
 #Loading Function Test Passsed
 print(db.load())
 
-#Create_collection Function Passed
+#Create_collection and collection_exist Function Passed
 print(db.create_collection("User"))
+

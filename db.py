@@ -14,8 +14,19 @@ class DataBase:
     def retrieve_object(cls, model_name, id):
         pass
     
+    def collection_exist(self, name):
+        data = self.load()
+        collection_filter = filter(lambda obj:obj.get(name)!="",data)
+        #print(collection_filter)
+        if len(list(collection_filter)) > 0:
+            return True
+        return False
+
+
     def create_collection(self, collection_name):
         try:
+            if self.collection_exist(collection_name):
+                return True, "Collection Already Exist in the Database"
             data = self.load()
             data.append({collection_name: []})
             self.dump(data)
