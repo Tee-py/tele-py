@@ -6,11 +6,17 @@ class DataBase:
     def __init__(self, file_name):
         self._file_name = file_name
 
-    @classmethod
-    def save_object(cls, model_name, data):
-        pass
+    def save_object(self, collection_name, data):
+        if not self.collection_exist(collection_name):
+            self.create_collection(collection_name)
+        dat = self.load()
+        collection = list(filter(lambda obj:list(obj.keys())[0]==collection_name, dat))[0]
+        position = dat.index(collection)
+        collection[collection_name].append(data)
+        dat[position] = collection
+        self.dump(dat)
+        return True
 
-    @classmethod
     def retrieve_object(cls, model_name, id):
         pass
     

@@ -1,1 +1,39 @@
-[]
+[
+    {
+        "User": [
+            {
+                "id": "162tebwejknevhk",
+                "chat_id": "31456789",
+                "name": "Emmanuel"
+            }
+        ]
+    },
+    {
+        "Images": []
+    },
+    {
+        "Students": []
+    },
+    {
+        "Teachers": []
+    },
+    {
+        "Country": []
+    },
+    {
+        "States": []
+    },
+    {
+        "News": []
+    },
+    {
+        "Saviours": [
+            {
+                "name": "Hello"
+            },
+            {
+                "name": "Helo"
+            }
+        ]
+    }
+]
