@@ -46,6 +46,10 @@ class DataBase:
         self.dump(list(new_data))
         return f"Collection: {collection_name} deleted from DataBase Successfully"
 
+    def flush(self):
+        self.dump([])
+        return True
+
     def load(self):
         with open(self._file_name) as db:
             data = json.load(db)

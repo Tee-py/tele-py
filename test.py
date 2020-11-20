@@ -11,6 +11,9 @@ col_lst = ["User", "Images", "Students", "Teachers", "Country", "States", "News"
 for col in col_lst:
     print(db.create_collection(col))
 
+time.sleep(2)
+print(db.flush())
+
 #Test for Deleting Collections Passed
 print("\nsleeping for 5 seconds ...\n")
 time.sleep(5)
