@@ -14,9 +14,11 @@ class DataBase:
     def retrieve_object(cls, model_name, id):
         pass
     
-    @classmethod
-    def create_collection(cls, collection_name):
-        pass
+    def create_collection(self, collection_name):
+        data = self.load()
+        data.append({collection_name: []})
+        self.dump(data)
+        return True
 
     def load(self):
         try:
@@ -25,6 +27,12 @@ class DataBase:
                 return data
         except:
             return False
+
+    def dump(self, data):
+        with open(self._file_name, "w") as db:
+            json.dump(data, db)
+            return True
+
 
 class User:
 

@@ -2,5 +2,7 @@ from db import DataBase, User
 
 db = DataBase("db.json")
 
-#print(db._file_name)
+#Loading Function Test Passsed
 print(db.load())
+
+print(db.create_collection("User"))
