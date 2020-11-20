@@ -15,8 +15,7 @@ def get_url():
     return contents["url"]
 
 def greet(bot, update):
-    text = """
-    Welcome To Tee-py Telegram Bot 👋.
+    text = """Welcome To Tee-py Telegram Bot 👋.
     I am Here to send you random Dog Images from the internet.👍
 
     enter: /dog to get a random Dog Image from the internet.
