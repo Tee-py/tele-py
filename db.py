@@ -15,22 +15,22 @@ class DataBase:
         pass
     
     def create_collection(self, collection_name):
-        data = self.load()
-        data.append({collection_name: []})
-        self.dump(data)
-        return True
-
-    def load(self):
         try:
-            with open(self._file_name) as db:
-                data = json.load(db)
-                return data
+            data = self.load()
+            data.append({collection_name: []})
+            self.dump(data)
+            return True
         except:
             return False
 
+    def load(self):
+        with open(self._file_name) as db:
+            data = json.load(db)
+            return data
+
     def dump(self, data):
         with open(self._file_name, "w") as db:
-            json.dump(data, db)
+            json.dump(data, db, indent=4)
             return True
 
 
