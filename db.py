@@ -8,19 +8,14 @@ class DataBase:
 
     def object_already_exist(self, object, collection_name):
         data = self.load()
-        #print(object["id"])
         collection = list(filter(lambda obj:list(obj.keys())[0]==collection_name, data))[0]
         data_exist = list(filter(lambda obj:obj["id"]==object["id"], collection[collection_name]))
         if data_exist:
             position = collection[collection_name].index(data_exist[0])
             collection[collection_name][position] = object
-            #print("Data Exists")
             return True, collection
         collection[collection_name].append(object)
-        #print("Doesn't Exist")
         return False, collection
-
-
 
     def save_object(self, collection_name, data):
         if not self.collection_exist(collection_name):
@@ -29,13 +24,20 @@ class DataBase:
         dat = self.load()
         saved_collection = list(filter(lambda obj:list(obj.keys())[0]==collection_name, dat))[0]
         position = dat.index(saved_collection)
-        #collection[collection_name].append(data)
         dat[position] = collection
         self.dump(dat)
         return True
 
-    def retrieve_object(cls, model_name, id):
-        pass
+    def retrieve_object(self, collection_name, id):
+        if not self.collection_exist(collection_name):
+            return f"Collection: {collection_name} does not Exist in the DataBase"
+        data = self.load()
+        collection = list(filter(lambda obj:list(obj.keys())[0]==collection_name, data))[0]
+        object_filter = list(filter(lambda obj:obj["id"]==id, collection[collection_name]))
+        if object_filter:
+            return object_filter[0]
+        else:
+            return False
     
     def collection_exist(self, name):
         data = self.load()
@@ -85,7 +87,7 @@ class DataBase:
 
 
 class User:
-
+    db = DataBase("db.json")
     def __init__(self, name, chat_id):
         self.id = uuid.uuid4()
         self.chat_id = chat_id
@@ -93,7 +95,7 @@ class User:
 
     def save(self):
         try:
-            DataBase.save_object(model_name="User", data={
+            db.save_object(collection_name="User", data={
                 "id": self.id, 
                 "chat_id": self.chat_id,
                 "name": self.name}
@@ -104,10 +106,8 @@ class User:
 
     @classmethod
     def retrieve(cls, id):
-        try:
-            return DataBase.retrieve_object(model_name="User", id=id)
-        except:
-            return False
+        data = db.retrieve_object("User", id)
+        return User(id=id, chat_id=data["chat_id"],name=data["name"]) if data else f"User Object: {id} Does Not Exist in the DataBase"
 
     def delete(self):
         try:

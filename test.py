@@ -22,10 +22,17 @@ col_lst = ["User", "Images", "Students", "Teachers", "Country", "States", "News"
 for col in col_lst:
     print(db.create_collection(col))
 
-#Testing Saving Objects
+#Testing Saving Objects and Retrieving Objects
 print(db.save_object("Saviours", {"id": "Hello"}))
 print(db.save_object("Saviours", {"id": "Hello", "status": "Wealthy"}))
 print(db.save_object("Saviours", {"id": "Hel", "status": "Wealthy"}))
 print(db.save_object("User", {"id":"162tebwejknevhk", "chat_id": "31456789", "name": "Emmanuel"}))
 print(db.save_object("User", {"id":"162tebwejknevhk", "chat_id": "31456789", "name": "Teepy"}))
 print(db.save_object("User", {"id":"162tebwejevhk", "chat_id": "31456789", "name": "Teepy"}))
+print(db.retrieve_object("Yser", "162tbwejevhk"))
+
+#USER CLASS TESTS---->
+
+user = User("Emmanuel Teepy", "1efdeiioppihe")
+print(user.save())
+print(User.retrieve("162tebwejevhk"))
