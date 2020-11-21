@@ -28,6 +28,12 @@ class DataBase:
         self.dump(dat)
         return True
 
+    def delete_object(self, collection_name, id):
+        data = self.load()
+        collection = list(filter(lambda obj:list(obj.keys())[0]==collection_name, data))[0]
+        position = data.index(collection)
+        pass
+
     def retrieve_object(self, collection_name, id):
         if not self.collection_exist(collection_name):
             return f"Collection: {collection_name} does not Exist in the DataBase"
@@ -87,31 +93,35 @@ class DataBase:
 
 
 class User:
+
     db = DataBase("db.json")
-    def __init__(self, name, chat_id):
-        self.id = uuid.uuid4()
+    def __init__(self, name, chat_id, id=None):
+        if not id:
+            self.id = uuid.uuid4()
+        else:
+            self.id = id
         self.chat_id = chat_id
         self.name = name
 
     def save(self):
-        try:
-            db.save_object(collection_name="User", data={
-                "id": self.id, 
-                "chat_id": self.chat_id,
-                "name": self.name}
-            )
-            return True
-        except:
-            return False
+        cls = User
+        cls.db.save_object(collection_name="User", data={
+            "id": str(self.id), 
+            "chat_id": self.chat_id,
+            "name": self.name}
+        )
+        return True
+ 
+    def __str__(self):
+        return f"User Object: {self.id}"
 
     @classmethod
     def retrieve(cls, id):
-        data = db.retrieve_object("User", id)
-        return User(id=id, chat_id=data["chat_id"],name=data["name"]) if data else f"User Object: {id} Does Not Exist in the DataBase"
+        data = cls.db.retrieve_object("User", id)
+        return User(id=data["id"], chat_id=data["chat_id"],name=data["name"]) if data else f"User Object: {id} Does Not Exist in the DataBase"
 
     def delete(self):
-        try:
-            DataBase.delete_object(model_name="User", id=self.id)
-            return True
-        except:
-            return False
+        cls = User
+        cls.db.delete_object(collection_name="User", id=self.id)
+        return True
+       

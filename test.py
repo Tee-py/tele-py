@@ -18,21 +18,26 @@ db = DataBase("db.json")
 #    print(db.delete_collection(col))
 
 #Create_collection and collection_exist Function Passed
-col_lst = ["User", "Images", "Students", "Teachers", "Country", "States", "News"]
-for col in col_lst:
-    print(db.create_collection(col))
+#col_lst = ["User", "Images", "Students", "Teachers", "Country", "States", "News"]
+#for col in col_lst:
+#    print(db.create_collection(col))
 
 #Testing Saving Objects and Retrieving Objects
-print(db.save_object("Saviours", {"id": "Hello"}))
-print(db.save_object("Saviours", {"id": "Hello", "status": "Wealthy"}))
-print(db.save_object("Saviours", {"id": "Hel", "status": "Wealthy"}))
-print(db.save_object("User", {"id":"162tebwejknevhk", "chat_id": "31456789", "name": "Emmanuel"}))
-print(db.save_object("User", {"id":"162tebwejknevhk", "chat_id": "31456789", "name": "Teepy"}))
-print(db.save_object("User", {"id":"162tebwejevhk", "chat_id": "31456789", "name": "Teepy"}))
-print(db.retrieve_object("Yser", "162tbwejevhk"))
+#print(db.save_object("Saviours", {"id": "Hello"}))
+#print(db.save_object("Saviours", {"id": "Hello", "status": "Wealthy"}))
+#print(db.save_object("Saviours", {"id": "Hel", "status": "Wealthy"}))
+#print(db.save_object("User", {"id":"162tebwejknevhk", "chat_id": "31456789", "name": "Emmanuel"}))
+#print(db.save_object("User", {"id":"162tebwejknevhk", "chat_id": "31456789", "name": "Teepy"}))
+#print(db.save_object("User", {"id":"162tebwejevhk", "chat_id": "31456789", "name": "Teepy"}))
+#print(db.retrieve_object("Yser", "162tbwejevhk"))
 
 #USER CLASS TESTS---->
+#user_datas = [{"chat_id":"12wsdwef34","name":"Morakinyo Daniel"}, {"chat_id":"12ewfegetyfds", "name":"Ajanaku Aiyede"}]
+##for data in user_datas:
+#   user = User(data["name"], data["chat_id"])
+#    user.save()
 
-user = User("Emmanuel Teepy", "1efdeiioppihe")
-print(user.save())
-print(User.retrieve("162tebwejevhk"))
+user = User.retrieve("da5dd503-d140-4788-acfa-9244fe3b6048")
+#print(user.name)
+#user.name = "I just changed his ame"
+print(user.delete())
