@@ -29,7 +29,7 @@ def dog(bot, update):
     bot.send_photo(chat_id=chat_id, photo=url)
 
 def main():
-    updater = Updater('1432662407:AAGqtsCjDmepId-U5PiZOkjvspLCcmGkGrM', use_context=False)
+    updater = Updater(KEY, use_context=False)
     dp = updater.dispatcher
     dp.add_handler(CommandHandler('dog', dog))
     dp.add_handler(CommandHandler('start', greet))
