@@ -4,7 +4,8 @@ import re
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
 from db import DataBase, User
 
-REGISTER = 1
+REGISTER = 0
+DOG = 1
 
 def get_image_url():
     allowed_extension = ['jpg','jpeg','png']
@@ -21,8 +22,14 @@ def get_url():
 def greet(bot, update):
     chat_id = update.message.chat_id
     exists, user = User.chat_id_exists(chat_id)
-    if User.chat_id_exists(chat_id):
-        text 
+    if exists:
+        text = f"""Hi {user["name"]} 👋.
+        I am Here to send you random Dog Images from the internet.👍
+
+        Enter /dog to get any random dog image.
+        """
+        update.message.reply_text(text=text)
+        return DOG
     text = """Welcome To Tee-py Telegram Bot 👋.
     I am Here to send you random Dog Images from the internet.👍
 
@@ -33,7 +40,16 @@ def greet(bot, update):
 
 def register(bot, update):
     chat_id = update.message.chat_id
-    details = 
+    name = update.message.text
+    user = User(name=name, chat_id=chat_id)
+    user.save()
+    text = f"""
+    Welcome, {name} 👋.
+    You can now start getting random dog images from the internet.
+    To get random images, Enter /dog.
+    """
+    update.message.reply_text(text=text)
+    return DOG
 
 def dog(bot, update):
     url = get_image_url()
