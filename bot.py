@@ -1,11 +1,10 @@
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationalHandler, CallbackContext
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler, CallbackContext
 import requests
 import re
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
 from db import DataBase, User
 
 REGISTER = 0
-DOG = 1
 
 def get_image_url():
     allowed_extension = ['jpg','jpeg','png']
@@ -29,11 +28,11 @@ def greet(bot, update):
         Enter /dog to get any random dog image.
         """
         update.message.reply_text(text=text)
-        return DOG
+        return ConversationHandler.END
     text = """Welcome To Tee-py Telegram Bot 👋.
     I am Here to send you random Dog Images from the internet.👍
 
-    Type anyname you would love to be associated with here.
+    Type any name you would love to be associated with here.
     """
     update.message.reply_text(text=text)
     return REGISTER
@@ -49,19 +48,33 @@ def register(bot, update):
     To get random images, Enter /dog.
     """
     update.message.reply_text(text=text)
-    return DOG
+    return ConversationHandler.END
 
 def dog(bot, update):
+    update.message.reply_text("Chill 🤟 while i'm fetching your image...")
     url = get_image_url()
     chat_id = update.message.chat_id
-    print(chat_id)
     bot.send_photo(chat_id=chat_id, photo=url)
 
+def cancel(bot, update):
+    text = """
+    Bye, We Talk some other time.
+    """
+    update.message.reply_text(text=text)
+    return ConversationHandler.END
+
 def main():
-    updater = Updater(KEY, use_context=False)
-    dp = updater.dispatcher
-    dp.add_handler(CommandHandler('dog', dog))
-    dp.add_handler(CommandHandler('start', greet))
+    updater = Updater("1432662407:AAGqtsCjDmepId-U5PiZOkjvspLCcmGkGrM", use_context=False)
+    dispatcher = updater.dispatcher
+    conversational_handler = ConversationHandler(
+        entry_points=[CommandHandler('start', greet)],
+        states={
+            REGISTER: [MessageHandler(Filters.text, register)],
+        },
+        fallbacks=[CommandHandler('cancel', cancel)],
+    )
+    dispatcher.add_handler(conversational_handler)
+    dispatcher.add_handler(CommandHandler('dog', dog))
     updater.start_polling()
     updater.idle()
     
