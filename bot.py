@@ -1,6 +1,9 @@
-from telegram.ext import Updater, CommandHandler
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationalHandler, CallbackContext
 import requests
 import re
+from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
+
+REGISTER = 1
 
 def get_image_url():
     allowed_extension = ['jpg','jpeg','png']
@@ -18,9 +21,14 @@ def greet(bot, update):
     text = """Welcome To Tee-py Telegram Bot 👋.
     I am Here to send you random Dog Images from the internet.👍
 
-    enter: /dog to get a random Dog Image from the internet.
+    Type anyname you would love to be associated with here.
     """
     update.message.reply_text(text=text)
+    return REGISTER
+
+def register(bot, update):
+    chat_id = update.message.chat_id
+    details = 
 
 def dog(bot, update):
     url = get_image_url()
