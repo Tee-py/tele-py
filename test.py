@@ -33,11 +33,8 @@ db = DataBase("db.json")
 
 #USER CLASS TESTS---->
 #user_datas = [{"chat_id":"12wsdwef34","name":"Morakinyo Daniel"}, {"chat_id":"12ewfegetyfds", "name":"Ajanaku Aiyede"}]
-##for data in user_datas:
-#   user = User(data["name"], data["chat_id"])
+#for data in user_datas:
+#    user = User(data["name"], data["chat_id"])
 #    user.save()
 
-user = User.retrieve("da5dd503-d140-4788-acfa-9244fe3b6048")
-#print(user.name)
-#user.name = "I just changed his ame"
-print(user.delete())
+print(User.chat_id_exists("12ewfegetyfds"))

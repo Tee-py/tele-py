@@ -124,4 +124,12 @@ class User:
         cls = User
         cls.db.delete_object(collection_name="User", id=self.id)
         return True
-       
+    
+    @classmethod
+    def chat_id_exists(cls, chat_id):
+        data = cls.db.load()
+        collection = list(filter(lambda obj:list(obj.keys())[0]=="User", data))[0]
+        chat_id_filter = list(filter(lambda obj:obj["chat_id"]==chat_id, collection["User"]))
+        if chat_id_filter:
+            return True, chat_id_filter[0]
+        return False, None

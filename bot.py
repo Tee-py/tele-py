@@ -2,6 +2,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, Conve
 import requests
 import re
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
+from db import DataBase, User
 
 REGISTER = 1
 
@@ -18,6 +19,10 @@ def get_url():
     return contents["url"]
 
 def greet(bot, update):
+    chat_id = update.message.chat_id
+    exists, user = User.chat_id_exists(chat_id)
+    if User.chat_id_exists(chat_id):
+        text 
     text = """Welcome To Tee-py Telegram Bot 👋.
     I am Here to send you random Dog Images from the internet.👍
 
