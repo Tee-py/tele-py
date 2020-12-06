@@ -6,7 +6,7 @@ from db import DataBase, User
 
 REGISTER = 0
 
-def get_image_url():
+def get_image_url()->str:
     allowed_extension = ['jpg','jpeg','png']
     file_extension = ''
     while file_extension not in allowed_extension:
@@ -14,7 +14,7 @@ def get_image_url():
         file_extension = re.search("([^.]*)$",url).group(1).lower()
     return url
 
-def get_url():
+def get_url()->str:
     contents = requests.get('https://random.dog/woof.json').json()    
     return contents["url"]
 

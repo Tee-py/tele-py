@@ -37,4 +37,6 @@ db = DataBase("db.json")
 #    user = User(data["name"], data["chat_id"])
 #    user.save()
 
-print(User.chat_id_exists("12ewfegetyfds"))
+#print(User.chat_id_exists("12ewfegetyfds"))
+
+
