@@ -140,5 +140,5 @@ class User:
         collection = list(filter(lambda obj:list(obj.keys())[0]=="User", data))[0]
         chat_id_filter = list(filter(lambda obj:obj["chat_id"]==chat_id, collection["User"]))
         if chat_id_filter:
-            return True, chat_id_filter[0]
-        return False, None
+            return True
+        return False

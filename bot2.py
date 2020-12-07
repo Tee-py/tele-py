@@ -11,8 +11,11 @@ def broadcast_message(bot, update):
 
 def start(bot, update):
     user = update.message.from_user
-    to_store = User(name=user["first_name"], chat_id=user["id"])
-    to_store.save()
+    if User.chat_id_exists(user["id"]):
+        pass
+    else:
+        to_store = User(name=user["first_name"], chat_id=user["id"])
+        to_store.save()
     text = f"""
     Welcome, {user["first_name"]} 👋.
     Your Details have now been stored in our database.
