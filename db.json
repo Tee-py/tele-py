@@ -2,24 +2,9 @@
     {
         "User": [
             {
-                "id": "d0fb65ec-d18d-4711-8c21-5fe4d3114ee0",
-                "chat_id": "12wsdwef34",
-                "name": "Morakinyo Daniel"
-            },
-            {
-                "id": "4532636a-12b8-49e5-a9ed-573c011dd21e",
-                "chat_id": "12ewfegetyfds",
-                "name": "Ajanaku Aiyede"
-            },
-            {
-                "id": "16d9df30-41a6-460b-bed2-3af17c9ededf",
+                "id": "a40c6c90-be99-4cf2-8a87-458ced70a549",
                 "chat_id": 1256735190,
-                "name": "Tobiloba"
-            },
-            {
-                "id": "58da3410-e30d-491b-9b16-ef66e5b10f7e",
-                "chat_id": 385705779,
-                "name": "Pit Bull"
+                "name": "Tee-py"
             }
         ]
     }

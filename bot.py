@@ -6,6 +6,7 @@ from db import DataBase, User
 
 REGISTER = 0
 
+
 def get_image_url()->str:
     allowed_extension = ['jpg','jpeg','png']
     file_extension = ''
