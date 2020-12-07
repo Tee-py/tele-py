@@ -5,10 +5,9 @@ from db import DataBase, User
 
 def broadcast_message(bot, update):
     message = update.message.text
-    user = update.message.from_user
-    print(user)
-    update.message.reply_text(text=message)
-    bot.send_message(chat_id="1256735190", text=message)
+    all_users = User.db.retrieve_collection("User")
+    for user in all_users:
+        bot.send_message(chat_id=user["chat_id"], text=message)
 
 def start(bot, update):
     user = update.message.from_user

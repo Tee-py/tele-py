@@ -40,3 +40,4 @@ db = DataBase("db.json")
 #print(User.chat_id_exists("12ewfegetyfds"))
 
 
+print(db.retrieve_collection("User"))
