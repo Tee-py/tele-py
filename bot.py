@@ -22,6 +22,7 @@ def greet(bot, update):
     chat_id = update.message.chat_id
     exists, user = User.chat_id_exists(chat_id)
     if exists:
+        print("User Exists")
         text = f"""Hi {user["name"]} 👋.
         I am Here to send you random Dog Images from the internet.👍
 
@@ -55,6 +56,7 @@ def dog(bot, update):
     url = get_image_url()
     chat_id = update.message.chat_id
     bot.send_photo(chat_id=chat_id, photo=url)
+    bot.send_text(chat_id=chat_id, text="Hiiii")
 
 def cancel(bot, update):
     text = """
@@ -64,7 +66,7 @@ def cancel(bot, update):
     return ConversationHandler.END
 
 def main():
-    updater = Updater(KEY, use_context=False)
+    updater = Updater("1432662407:AAGqtsCjDmepId-U5PiZOkjvspLCcmGkGrM", use_context=False)
     dispatcher = updater.dispatcher
     conversational_handler = ConversationHandler(
         entry_points=[CommandHandler('start', greet)],
