@@ -19,13 +19,12 @@ def start(bot, update):
     text = f"""
     Welcome, {user["first_name"]} 👋.
     Your Details have now been stored in our database.
-    You will now be able to get Signals sent to the group.
+    You will now be able to get Signals sent to the Test group.
     """
     update.message.reply_text(text=text)
 
-
 def main():
-    updater = Updater("", use_context=False)
+    updater = Updater("1432662407:AAGqtsCjDmepId-U5PiZOkjvspLCcmGkGrM", use_context=False)
     dispatcher = updater.dispatcher
     dispatcher.add_handler(MessageHandler(Filters.regex('(Signal|signal)+'), broadcast_message))
     dispatcher.add_handler(CommandHandler('start', start))

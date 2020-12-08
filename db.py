@@ -142,3 +142,38 @@ class User:
         if chat_id_filter:
             return True
         return False
+
+
+class BotUser(User):
+
+    def __init__(self, name, chat_id, id=None, dls=None, max_loss=None):
+        User.__init__(self, name, chat_id)
+        self._dls = dls
+        self._max_loss = max_loss
+
+    def __str__(self):
+        return f"BotUser Object: {self.name} {self.id}"
+
+
+    def save(self):
+        clss = BotUser
+        clss.db.save_object(collection_name="User", data={
+            "id": str(self.id), 
+            "chat_id": self.chat_id,
+            "name": self.name,
+            "default_lot_size": self._dls,
+            "max_loss_per_trade": self._max_loss
+            }
+        )
+        return True
+
+    @classmethod
+    def retrieve(cls, id):
+        data = cls.db.retrieve_object("User", id)
+        return BotUser(
+            id=data["id"], 
+            chat_id=data["chat_id"],
+            name=data["name"], 
+            dls=data["default_lot_size"], 
+            max_loss=data["max_loss_per_trade"]
+        ) if data else f"User Object: {id} Does Not Exist in the DataBase"
