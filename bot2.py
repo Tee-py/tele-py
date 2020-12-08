@@ -18,6 +18,14 @@ def disable_updates(bot, update):
         text="You have currently Disabled updates feature. Enter /enable to start getting signal updates."
         )
 
+def enable_updates(bot, update):
+    chat_id = update.message.from_user["chat_id"]
+    user = BotUser.retrieve(chat_id)
+    user.can_receive_signals = True
+    user.save()
+    update.message.reply_text(
+        text="You have currently Enabled updates feature. Enter /disable to stop getting updates."
+        )
 
 def start(bot, update):
     user = update.message.from_user
