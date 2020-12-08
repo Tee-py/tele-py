@@ -2,10 +2,10 @@
     {
         "User": [
             {
-                "id": "edf430b2-948c-4921-bd8f-1783b138cd0c",
+                "id": "b7762b32-f15d-4b72-99fd-911f816f362d",
                 "chat_id": 1256735190,
                 "name": "Tee-py",
-                "default_lot_size": null,
+                "default_lot_size": 10.0,
                 "max_loss_per_trade": null,
                 "signal_enabled": true
             }
