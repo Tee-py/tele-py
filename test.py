@@ -41,6 +41,5 @@ db = DataBase("db.json")
 from db import BotUser
 
 
-user = BotUser.retrieve("765832f1-5bf9-4f02-b049-6d88bec941dd")
-user.dls = 800
-user.save()
+user = BotUser.retrieve("123656565")
+print(user)

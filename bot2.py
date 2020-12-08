@@ -26,7 +26,7 @@ def start(bot, update):
 def main():
     updater = Updater("1432662407:AAGqtsCjDmepId-U5PiZOkjvspLCcmGkGrM", use_context=False)
     dispatcher = updater.dispatcher
-    dispatcher.add_handler(MessageHandler(Filters.regex('(Signal|signal)+'), broadcast_message))
+    dispatcher.add_handler(MessageHandler(Filters.regex('(BUY|SELL|buy|sell|SL|TP|Buy|Sell)+'), broadcast_message))
     dispatcher.add_handler(CommandHandler('start', start))
     updater.start_polling()
     updater.idle()

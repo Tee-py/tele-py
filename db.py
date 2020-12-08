@@ -153,7 +153,6 @@ class BotUser(User):
     def __str__(self):
         return f"BotUser Object: {self.name} {self.id}"
 
-
     def save(self):
         clss = BotUser
         clss.db.save_object(collection_name="User", data={
@@ -167,12 +166,26 @@ class BotUser(User):
         return True
 
     @classmethod
-    def retrieve(cls, id):
-        data = cls.db.retrieve_object("User", id)
-        return BotUser(
-            id=data["id"], 
-            chat_id=data["chat_id"],
-            name=data["name"], 
-            dls=data["default_lot_size"], 
-            max_loss=data["max_loss_per_trade"]
-        ) if data else f"User Object: {id} Does Not Exist in the DataBase"
+    def retrieve(cls, chat_id):
+        data = cls.retrieve_by_chat_id(chat_id)
+        if data:
+            return BotUser(
+                id=data["id"], 
+                chat_id=data["chat_id"],
+                name=data["name"], 
+                dls=data["default_lot_size"], 
+                max_loss=data["max_loss_per_trade"]
+            ) if data else f"User Object: {id} Does Not Exist in the DataBase"
+        return False
+    @classmethod
+    def retrieve_by_chat_id(cls, chat_id):
+        if not cls.db.collection_exist("User"):
+            print(f"Collection: {collection_name} does not Exist in the DataBase")
+            return False
+        data = cls.db.load()
+        collection = list(filter(lambda obj:list(obj.keys())[0]=="User", data))[0]
+        object_filter = list(filter(lambda obj:obj["chat_id"]==chat_id, collection["User"]))
+        if object_filter:
+            return object_filter[0]
+        else:
+            return False
