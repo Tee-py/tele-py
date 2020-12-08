@@ -1,1 +1,14 @@
-[]
+[
+    {
+        "User": [
+            {
+                "id": "039d1ee1-2c1f-4110-abbc-838ce4924ce5",
+                "chat_id": "65433234",
+                "name": "Kelechi",
+                "default_lot_size": null,
+                "max_loss_per_trade": null,
+                "signal_enabled": true
+            }
+        ]
+    }
+]
