@@ -37,7 +37,12 @@ class DataBase:
         data = self.load()
         collection = list(filter(lambda obj:list(obj.keys())[0]==collection_name, data))[0]
         position = data.index(collection)
-        pass
+        #print(collection)
+        #print(position)
+        new_collection = list(filter(lambda obj:str(obj["id"])!=id, collection[collection_name]))
+        #print(new_collection)
+        data[position][collection_name] = new_collection
+        self.dump(data)
 
     def retrieve_object(self, collection_name, id):
         if not self.collection_exist(collection_name):
@@ -181,6 +186,7 @@ class BotUser(User):
                 max_loss=data["max_loss_per_trade"]
             ) if data else f"User Object: {id} Does Not Exist in the DataBase"
         return False
+   
     @classmethod
     def retrieve_by_chat_id(cls, chat_id):
         if not cls.db.collection_exist("User"):
@@ -193,3 +199,7 @@ class BotUser(User):
             return object_filter[0]
         else:
             return False
+    
+    def delete(self):
+        user = BotUser.retrieve_by_chat_id(self.chat_id)
+        BotUser.db.delete_object(collection_name="User", id=user["id"])

@@ -15,13 +15,6 @@
                 "id": "59142aba-651a-4684-97c1-4eb7c70e2ca3",
                 "chat_id": 986485574,
                 "name": "Debiyi"
-            },
-            {
-                "id": "270a3f88-858b-4349-a1a7-f84f67e83454",
-                "chat_id": "123656565",
-                "name": "Inuendo",
-                "default_lot_size": null,
-                "max_loss_per_trade": null
             }
         ]
     }
