@@ -8,16 +8,21 @@ class DataBase:
 
     def object_already_exist(self, object, collection_name):
         data = self.load()
+        #print(object)
         collection = list(filter(lambda obj:list(obj.keys())[0]==collection_name, data))[0]
-        data_exist = list(filter(lambda obj:obj["id"]==object["id"], collection[collection_name]))
+        print(object["id"])
+        data_exist = list(filter(lambda obj:str(obj["id"])==object["id"], collection[collection_name]))
+        #print(data_exist)
         if data_exist:
             position = collection[collection_name].index(data_exist[0])
             collection[collection_name][position] = object
+            #print("Exists")
             return True, collection
         collection[collection_name].append(object)
         return False, collection
 
     def save_object(self, collection_name, data):
+        #print(data)
         if not self.collection_exist(collection_name):
             self.create_collection(collection_name)
         exists, collection = self.object_already_exist(data, collection_name)
@@ -146,7 +151,7 @@ class User:
 class BotUser(User):
 
     def __init__(self, name, chat_id, id=None, dls=None, max_loss=None):
-        User.__init__(self, name, chat_id)
+        User.__init__(self, name, chat_id, id)
         self._dls = dls
         self._max_loss = max_loss
 
@@ -164,7 +169,6 @@ class BotUser(User):
             }
         )
         return True
-
     @classmethod
     def retrieve(cls, chat_id):
         data = cls.retrieve_by_chat_id(chat_id)

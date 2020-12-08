@@ -38,8 +38,3 @@ db = DataBase("db.json")
 #    user.save()
 
 #print(User.chat_id_exists("12ewfegetyfds"))
-from db import BotUser
-
-
-user = BotUser.retrieve("123656565")
-print(user)
