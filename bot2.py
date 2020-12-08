@@ -12,16 +12,24 @@ def broadcast_message(bot, update):
 def start(bot, update):
     user = update.message.from_user
     if User.chat_id_exists(user["id"]):
-        pass
+        text = f"""
+        Welcome, {user["first_name"]} 👋.
+        Your Details exists in our DataBase.
+        
+        Type / to see the list of commands and their uses.
+        """
+        update.message.reply_text(text=text)
     else:
         to_store = BotUser(name=user["first_name"], chat_id=user["id"])
         to_store.save()
-    text = f"""
-    Welcome, {user["first_name"]} 👋.
-    Your Details have now been stored in our database.
-    You will now be able to get Signals sent to the Test group.
-    """
-    update.message.reply_text(text=text)
+        text = f"""
+        Welcome, {user["first_name"]} 👋.
+        Your Details have now been stored in our database.
+        You are now able to receive Forex Signals sent to the Signal Group
+
+        Type / to see the lists of commands and their uses.
+        """
+        update.message.reply_text(text=text)
 
 def main():
     updater = Updater("1432662407:AAGqtsCjDmepId-U5PiZOkjvspLCcmGkGrM", use_context=False)
