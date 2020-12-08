@@ -40,6 +40,7 @@ db = DataBase("db.json")
 #print(User.chat_id_exists("12ewfegetyfds"))
 from db import BotUser
 
-#print(db.retrieve_collection("User"))
-user = BotUser(name="Kelechi", chat_id="12333")
-print(BotUser.retrieve("c743150d-7926-4d34-883e-6b643bb18d62"))
+
+user = BotUser.retrieve("765832f1-5bf9-4f02-b049-6d88bec941dd")
+user.dls = 800
+user.save()

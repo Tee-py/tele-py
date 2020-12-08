@@ -22,6 +22,20 @@
                 "name": "Kelechi",
                 "default_lot_size": null,
                 "max_loss_per_trade": null
+            },
+            {
+                "id": "765832f1-5bf9-4f02-b049-6d88bec941dd",
+                "chat_id": "467874516789",
+                "name": "KayCee",
+                "default_lot_size": 20,
+                "max_loss_per_trade": 890
+            },
+            {
+                "id": "6bb444c2-3ed9-482d-92b7-3a4eb96de93e",
+                "chat_id": "467874516789",
+                "name": "KayCee",
+                "default_lot_size": 20,
+                "max_loss_per_trade": 890
             }
         ]
     }

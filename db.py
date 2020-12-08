@@ -78,7 +78,6 @@ class DataBase:
         print(f"Collection: {collection_name} retrieved from DataBase Successfully")
         return data[collection_name]
         
-
     def delete_collection(self, collection_name):
         if not self.collection_exist(collection_name):
             return f"Collection: {collection_name} does not Exist In the Database"
