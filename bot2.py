@@ -1,13 +1,23 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler, CallbackContext
 import re
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
-from db import DataBase, User
+from db import DataBase, User, BotUser
 
 def broadcast_message(bot, update):
     message = update.message.text
     all_users = User.db.retrieve_collection("User")
     for user in all_users:
         bot.send_message(chat_id=user["chat_id"], text=message) if user["signal_enabled"]
+
+def disable_updates(bot, update):
+    chat_id = update.message.from_user["chat_id"]
+    user = BotUser.retrieve(chat_id)
+    user.can_receive_signals = False
+    user.save()
+    update.message.reply_text(
+        text="You have currently Disabled updates feature. Enter /enable to start getting signal updates."
+        )
+
 
 def start(bot, update):
     user = update.message.from_user
