@@ -7,10 +7,11 @@ def broadcast_message(bot, update):
     message = update.message.text
     all_users = User.db.retrieve_collection("User")
     for user in all_users:
-        bot.send_message(chat_id=user["chat_id"], text=message) if user["signal_enabled"]
+        if user["signal_enabled"]:
+            bot.send_message(chat_id=user["chat_id"], text=message)
 
 def disable_updates(bot, update):
-    chat_id = update.message.from_user["chat_id"]
+    chat_id = update.message.from_user["id"]
     user = BotUser.retrieve(chat_id)
     user.can_receive_signals = False
     user.save()
@@ -19,7 +20,7 @@ def disable_updates(bot, update):
         )
 
 def enable_updates(bot, update):
-    chat_id = update.message.from_user["chat_id"]
+    chat_id = update.message.from_user["id"]
     user = BotUser.retrieve(chat_id)
     user.can_receive_signals = True
     user.save()
@@ -54,6 +55,8 @@ def main():
     dispatcher = updater.dispatcher
     dispatcher.add_handler(MessageHandler(Filters.regex('(BUY|SELL|buy|sell|SL|TP|Buy|Sell)+'), broadcast_message))
     dispatcher.add_handler(CommandHandler('start', start))
+    dispatcher.add_handler(CommandHandler('enable', enable_updates))
+    dispatcher.add_handler(CommandHandler('disable', disable_updates))
     updater.start_polling()
     updater.idle()
 
