@@ -3,20 +3,25 @@ import uuid
 
 class DataBase:
 
+    """
+    Description: A DataBase Wrapper Class Built on Python Dictionaries and JSON
+    Attributes: file_name("Path to the json file for the database")
+    """
+
     def __init__(self, file_name):
         self._file_name = file_name
 
     def object_already_exist(self, object, collection_name):
+        """
+        Object method to determine if a data exists in a database collection using 
+        """
         data = self.load()
-        #print(object)
         collection = list(filter(lambda obj:list(obj.keys())[0]==collection_name, data))[0]
         print(object["id"])
         data_exist = list(filter(lambda obj:str(obj["id"])==object["id"], collection[collection_name]))
-        #print(data_exist)
         if data_exist:
             position = collection[collection_name].index(data_exist[0])
             collection[collection_name][position] = object
-            #print("Exists")
             return True, collection
         collection[collection_name].append(object)
         return False, collection

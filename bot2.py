@@ -14,7 +14,7 @@ def start(bot, update):
     if User.chat_id_exists(user["id"]):
         pass
     else:
-        to_store = User(name=user["first_name"], chat_id=user["id"])
+        to_store = BotUser(name=user["first_name"], chat_id=user["id"])
         to_store.save()
     text = f"""
     Welcome, {user["first_name"]} 👋.

@@ -16,9 +16,9 @@ run python bot.py
 ```
 
 ### BUG FIXES AND FUTURE UPDATES
-**Delete method of the DataBase Class**
+**Delete method of the DataBase Class ✅**
 **Retrieve a bot user by chat_id ✅**
-**Delete a Bot User by chat_id**
+**Delete a Bot User by chat_id ✅**
 **Add command to update Default_lot_size, max_loss for a bot user**
 **Multiple Saving of BotUser object when updated ✅**
 **Move To Faunadb for Storing Data**
