@@ -160,11 +160,11 @@ class User:
 
 class BotUser(User):
 
-    def __init__(self, name, chat_id, id=None, dls=None, max_loss=None):
+    def __init__(self, name, chat_id, id=None, dls=None, max_loss=None, signal_enabled=True):
         User.__init__(self, name, chat_id, id)
         self._dls = dls
         self._max_loss = max_loss
-        self.can_receive_signals = True
+        self.can_receive_signals = signal_enabled
 
     def __str__(self):
         return f"BotUser Object: {self.name} {self.id}"
@@ -191,7 +191,7 @@ class BotUser(User):
                 name=data["name"], 
                 dls=data["default_lot_size"], 
                 max_loss=data["max_loss_per_trade"],
-                can_receive_signals=data["signal_enabled"]
+                signal_enabled=data["signal_enabled"]
             ) if data else f"User Object: {id} Does Not Exist in the DataBase"
         return False
    

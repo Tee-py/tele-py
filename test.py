@@ -41,5 +41,5 @@ db = DataBase("db.json")
 from db import BotUser
 
 
-user = BotUser.retrieve("123656565")
-user.delete()
+user = BotUser(name="Kelechi", chat_id="65433234")
+user.save()
