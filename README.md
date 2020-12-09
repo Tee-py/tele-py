@@ -21,7 +21,7 @@ run python bot.py
 **Delete a Bot User by chat_id ✅**
 **Add attribute to enable signals to BotUser class ✅**
 **Prevent multiple saving of BotUser with the same chat_id**
-**Add command to update Default_lot_size, max_loss for a bot user**
+**Add command to update Default_lot_size, max_loss for a bot user ✅**
 **Multiple Saving of BotUser object when updated ✅**
 **Move To Faunadb for Storing Data**
 
