@@ -136,7 +136,7 @@ def start(bot, update):
         update.message.reply_text(text=text)
 
 def main():
-    updater = Updater("1432662407:AAGqtsCjDmepId-U5PiZOkjvspLCcmGkGrM", use_context=False)
+    updater = Updater("", use_context=False)
     dispatcher = updater.dispatcher
     conversational_handler = ConversationHandler(
         entry_points=[CommandHandler('set_dls', set_dls), CommandHandler('set_mls', set_mls)],
