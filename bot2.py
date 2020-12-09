@@ -35,16 +35,7 @@ def get_details(bot, update):
     chat_id = update.message.from_user["id"]
     user = BotUser.retrieve(chat_id)
     update.message.reply_text(
-        text=f"""
-            name: {user.name}
-Default lot size: {user._dls}
-Max loss per trade: {user._max_loss}
-Signal status: {user.can_receive_signals}
-
-Enter: /set_dls to change Default lot size
-       /set_mls to change Max loss per trade
-       /disable to disable signal updates
-       /enable to enable signal updates
+        text=f"""name: {user.name}\nDefault lot size: {user._dls}\nMax loss per trade: {user._max_loss}\nSignal status: {user.can_receive_signals}\n\nEnter: /set_dls to change Default lot size\n    /set_mls to change Max loss per trade\n    /disable to disable signal updates\n    /enable to enable signal updates
         """
         )
 
@@ -98,26 +89,18 @@ def start(bot, update):
     print(update.message.text)
     if User.chat_id_exists(user["id"]):
         text = f"""
-        Welcome, {user["first_name"]} 👋.
-Your Details exists in our DataBase.
-
-Type / to see the list of commands and their uses.
+        Welcome, {user["first_name"]} 👋.\nYour Details exists in our DataBase.\n\nType / to see the list of commands and their uses.
         """
         update.message.reply_text(text=text)
     else:
         to_store = BotUser(name=user["first_name"], chat_id=user["id"])
         to_store.save()
         text = f"""
-        Welcome, {user["first_name"]} 👋.
-Your Details have now been stored in our database.
-You are now able to receive Forex Signals sent to the Signal Group
-
-Type / to see the lists of commands and their uses.
-"""
+        Welcome, {user["first_name"]} 👋.\nYour Details have now been stored in our database.\nYou are now able to receive Forex Signals sent to the Signal Group\n\nType / to see the lists of commands and their uses."""
         update.message.reply_text(text=text)
 
 def main():
-    updater = Updater("1432662407:AAGqtsCjDmepId-U5PiZOkjvspLCcmGkGrM", use_context=False)
+    updater = Updater("KEY", use_context=False)
     dispatcher = updater.dispatcher
     conversational_handler = ConversationHandler(
         entry_points=[CommandHandler('set_dls', set_dls)],
@@ -128,7 +111,6 @@ def main():
     )
     dispatcher.add_handler(MessageHandler(Filters.regex('(BUY|SELL|buy|sell|SL|TP|Buy|Sell)+'), broadcast_message))
     dispatcher.add_handler(CommandHandler('start', start))
-    #dispatcher.add_handler(CommandHandler('set_dls', set_dls))
     dispatcher.add_handler(CommandHandler('enable', enable_updates))
     dispatcher.add_handler(CommandHandler('disable', disable_updates))
     dispatcher.add_handler(CommandHandler('details', get_details))

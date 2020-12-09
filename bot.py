@@ -67,7 +67,7 @@ def cancel(bot, update):
     return ConversationHandler.END
 
 def main():
-    updater = Updater("1432662407:AAGqtsCjDmepId-U5PiZOkjvspLCcmGkGrM", use_context=False)
+    updater = Updater("KEY", use_context=False)
     dispatcher = updater.dispatcher
     conversational_handler = ConversationHandler(
         entry_points=[CommandHandler('start', greet)],
