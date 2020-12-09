@@ -4,7 +4,7 @@ import uuid
 class DataBase:
 
     """
-    Description: A DataBase Wrapper Class Built on Python Dictionaries and JSON
+    Description: A DataBase Wrapper Class Built on Python Dictionaries and JSON. Simulating  NOSQL DataBases
     Attributes: file_name("Path to the json file for the database")
     """
 
@@ -27,9 +27,16 @@ class DataBase:
         return False, collection
 
     def save_object(self, collection_name, data):
-        #print(data)
+        """
+        Description: DataBase method to save object into a collection in the database.
+        Arguments: collection_name => name of the collection to be saved
+                   data => The data to be saved into collection
+        A collection is like a table in Relational DataBases that holds data while the data is the members of such tables.
+        """
+
         if not self.collection_exist(collection_name):
             self.create_collection(collection_name)
+
         exists, collection = self.object_already_exist(data, collection_name)
         dat = self.load()
         saved_collection = list(filter(lambda obj:list(obj.keys())[0]==collection_name, dat))[0]
@@ -39,6 +46,11 @@ class DataBase:
         return True
 
     def delete_object(self, collection_name, id):
+        """
+        Description: A DataBase method to delete an object from a collection.
+        Arguments: collection_name => name of the collection the object belongs to.
+                   id => The id of the Object to be Deleted.
+        """
         data = self.load()
         collection = list(filter(lambda obj:list(obj.keys())[0]==collection_name, data))[0]
         position = data.index(collection)
