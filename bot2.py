@@ -125,14 +125,14 @@ def start(bot, update):
     print(update.message.text)
     if User.chat_id_exists(user["id"]):
         text = f"""
-        Welcome, {user["first_name"]} 👋 🎉.\nYour Details exists in our DataBase 🥳.\n\nType / to see the list of commands and their uses.
+        Welcome, {user["first_name"]} 👋 🎉.\nYour Details exists in our DataBase 🥳.\n\nType / to see the list of commands 🛠 and their uses.
         """
         update.message.reply_text(text=text)
     else:
         to_store = BotUser(name=user["first_name"], chat_id=user["id"])
         to_store.save()
         text = f"""
-        Welcome, {user["first_name"]} 👋 🎉 🎉.\nYour Details have now been stored in our database 🥳.\nYou are now able to receive Forex Signals sent to the Signal Group 🚀🚀.\n\nType / to see the lists of commands and their uses."""
+        Welcome, {user["first_name"]} 👋 🎉 🎉.\nYour Details have now been stored in our database 🥳.\nYou are now able to receive Forex Signals sent to the Signal Group 🚀🚀.\n\nType / to see the lists of commands 🛠 and their uses."""
         update.message.reply_text(text=text)
 
 def main():
