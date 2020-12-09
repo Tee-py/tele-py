@@ -5,6 +5,7 @@ from db import DataBase, User, BotUser
 
 
 SET_DLS = 0
+SET_MLS = 1
 
 def broadcast_message(bot, update):
     message = update.message.text
@@ -36,7 +37,8 @@ def get_details(bot, update):
     user = BotUser.retrieve(chat_id)
     update.message.reply_text(
         text=f"""name: {user.name}\nDefault lot size: {user._dls}\nMax loss per trade: {user._max_loss}\nSignal status: {user.can_receive_signals}\n\nEnter: /set_dls to change Default lot size\n    /set_mls to change Max loss per trade\n    /disable to disable signal updates\n    /enable to enable signal updates
-        """
+        """,
+        reply_markup=ReplyKeyboardRemove()
         )
 
 def set_dls(bot, update):
@@ -84,6 +86,40 @@ def set_dls(bot, update):
         )
         return ConversationHandler.END
 
+def set_mls(bot, update):
+    message = update.message.text
+    if message == "/set_mls":
+        update.message.reply_text(
+            text="Enter The maximum Loss in Dollars you're looking to incure per trade.\n\nKindly note that this would be used to determine your stop loss for all trades placed by the Bot from the recieved signals. If you do not understand what stop loss means, kindly click on the links below to know more about stop losses and Risk management. \n\n",
+            reply_markup=ReplyKeyboardRemove()
+        )
+        update.message.reply_text(
+            text="https://www.babypips.com/learn/forex/equity-stop",
+            reply_markup=ReplyKeyboardRemove()
+        )
+        update.message.reply_text(
+            text="https://www.investopedia.com/articles/trading/09/risk-management.asp",
+            reply_markup=ReplyKeyboardRemove()
+        )
+        return SET_MLS
+    try:
+        message = float(message)
+    except:
+        update.message.reply_text(
+            text="Invalid value entered. Maximum loss should be an integer or a Float e.g(2.90, 300)",
+            reply_markup=ReplyKeyboardRemove()
+        )
+        return ConversationHandler.END
+    chat_id = update.message.from_user["id"]
+    user = BotUser.retrieve(chat_id)
+    user._max_loss = message
+    user.save()
+    update.message.reply_text(
+        text="Successfully updated maximum loss for trades. enter /details to see your details.",
+        reply_markup=ReplyKeyboardRemove()
+    )
+    return ConversationHandler.END
+
 def start(bot, update):
     user = update.message.from_user
     print(update.message.text)
@@ -100,12 +136,13 @@ def start(bot, update):
         update.message.reply_text(text=text)
 
 def main():
-    updater = Updater("KEY", use_context=False)
+    updater = Updater("1432662407:AAGqtsCjDmepId-U5PiZOkjvspLCcmGkGrM", use_context=False)
     dispatcher = updater.dispatcher
     conversational_handler = ConversationHandler(
-        entry_points=[CommandHandler('set_dls', set_dls)],
+        entry_points=[CommandHandler('set_dls', set_dls), CommandHandler('set_mls', set_mls)],
         states={
             SET_DLS: [MessageHandler(Filters.text, set_dls)],
+            SET_MLS: [MessageHandler(Filters.text, set_mls)]
         },
         fallbacks=[]
     )
