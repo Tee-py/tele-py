@@ -2,7 +2,15 @@
     {
         "User": [
             {
-                "id": "5d65aa8a-6114-42f9-bb5b-2a08d84e4f4d",
+                "id": "8220e16f-ceff-4c5c-998e-0d4a8099c15c",
+                "chat_id": 904839457,
+                "name": "John",
+                "default_lot_size": null,
+                "max_loss_per_trade": null,
+                "signal_enabled": true
+            },
+            {
+                "id": "c5be5081-60b1-4d34-9cb1-3665064b3acd",
                 "chat_id": 1256735190,
                 "name": "Tee-py",
                 "default_lot_size": null,

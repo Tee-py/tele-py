@@ -20,8 +20,8 @@ def disable_updates(bot, update):
     user.can_receive_signals = False
     user.save()
     update.message.reply_text(
-        text="You have currently Disabled updates feature. Enter /enable to start getting signal updates."
-        )
+        text="❌ You have currently Disabled updates feature. Enter /enable to start getting signal updates."
+    )
 
 def enable_updates(bot, update):
     chat_id = update.message.from_user["id"]
@@ -29,14 +29,14 @@ def enable_updates(bot, update):
     user.can_receive_signals = True
     user.save()
     update.message.reply_text(
-        text="You have currently Enabled updates feature. Enter /disable to stop getting updates."
-        )
+        text="✅ You have currently Enabled updates feature. Enter /disable to stop getting updates."
+    )
 
 def get_details(bot, update):
     chat_id = update.message.from_user["id"]
     user = BotUser.retrieve(chat_id)
     update.message.reply_text(
-        text=f"""name: {user.name}\nDefault lot size: {user._dls}\nMax loss per trade: {user._max_loss}\nSignal status: {user.can_receive_signals}\n\nEnter: /set_dls to change Default lot size\n    /set_mls to change Max loss per trade\n    /disable to disable signal updates\n    /enable to enable signal updates
+        text=f"""name   👩‍🦳👱🏽‍♂️: {user.name}\nDefault lot size   📈: {user._dls}\nMax loss per trade   💰: {user._max_loss}\nSignal status   {"🔔" if user.can_receive_signals else "🔕"}: {user.can_receive_signals}\n\nEnter: /set_dls to change Default lot size\n    /set_mls to change Max loss per trade\n    /disable to disable signal updates\n    /enable to enable signal updates
         """,
         reply_markup=ReplyKeyboardRemove()
         )
@@ -46,7 +46,7 @@ def set_dls(bot, update):
     reply = [[10.0, 1.0, 0.1, 0.01]]
     if message == "/set_dls":
         update.message.reply_text(
-            text="Choose the LotSize you want to set or Enter your custom value",
+            text="Choose the LotSize 💰 you want to set or Enter your custom value",
             reply_markup=ReplyKeyboardMarkup(reply, one_time_keyboard=True),
         )
         return SET_DLS
@@ -54,7 +54,7 @@ def set_dls(bot, update):
         message = float(message)
     except:
         update.message.reply_text(
-            text="Invalid Input For LotSize.",
+            text="Invalid ❌ Input For LotSize.",
             reply_markup=ReplyKeyboardRemove()
         )
         return ConversationHandler.END
@@ -65,14 +65,14 @@ def set_dls(bot, update):
         user._dls = float(message)
         user.save()
         update.message.reply_text(
-            text="Successfully updated default lot size for trades. enter /details to see your details.",
+            text="✅ Successfully updated default lot size 💰 for trades. enter /details to see your details.",
             reply_markup=ReplyKeyboardRemove()
         )
         return ConversationHandler.END
     else:
         if message<0.01 or message > 100:
             update.message.reply_text(
-                text="LotSize must be between 0.01 and 100 both inclusive.",
+                text="LotSize 💰 must be between 0.01 and 100 both inclusive.",
                 reply_markup=ReplyKeyboardRemove()
             )
             return ConversationHandler.END
@@ -81,7 +81,7 @@ def set_dls(bot, update):
         user._dls = message
         user.save()
         update.message.reply_text(
-            text="Successfully updated default lot size for trades. enter /details to see your details.",
+            text="✅ Successfully updated default lot size for trades. enter /details to see your details.",
             reply_markup=ReplyKeyboardRemove()
         )
         return ConversationHandler.END
@@ -106,7 +106,7 @@ def set_mls(bot, update):
         message = float(message)
     except:
         update.message.reply_text(
-            text="Invalid value entered. Maximum loss should be an integer or a Float e.g(2.90, 300)",
+            text="❌ Invalid value entered. Maximum loss should be an integer or a Float e.g(2.90, 300)",
             reply_markup=ReplyKeyboardRemove()
         )
         return ConversationHandler.END
@@ -115,7 +115,7 @@ def set_mls(bot, update):
     user._max_loss = message
     user.save()
     update.message.reply_text(
-        text="Successfully updated maximum loss for trades. enter /details to see your details.",
+        text="✅ Successfully updated maximum loss for trades. enter /details to see your details.",
         reply_markup=ReplyKeyboardRemove()
     )
     return ConversationHandler.END
@@ -125,18 +125,18 @@ def start(bot, update):
     print(update.message.text)
     if User.chat_id_exists(user["id"]):
         text = f"""
-        Welcome, {user["first_name"]} 👋.\nYour Details exists in our DataBase.\n\nType / to see the list of commands and their uses.
+        Welcome, {user["first_name"]} 👋 🎉.\nYour Details exists in our DataBase 🥳.\n\nType / to see the list of commands and their uses.
         """
         update.message.reply_text(text=text)
     else:
         to_store = BotUser(name=user["first_name"], chat_id=user["id"])
         to_store.save()
         text = f"""
-        Welcome, {user["first_name"]} 👋.\nYour Details have now been stored in our database.\nYou are now able to receive Forex Signals sent to the Signal Group\n\nType / to see the lists of commands and their uses."""
+        Welcome, {user["first_name"]} 👋 🎉 🎉.\nYour Details have now been stored in our database 🥳.\nYou are now able to receive Forex Signals sent to the Signal Group 🚀🚀.\n\nType / to see the lists of commands and their uses."""
         update.message.reply_text(text=text)
 
 def main():
-    updater = Updater("", use_context=False)
+    updater = Updater("1432662407:AAGqtsCjDmepId-U5PiZOkjvspLCcmGkGrM", use_context=False)
     dispatcher = updater.dispatcher
     conversational_handler = ConversationHandler(
         entry_points=[CommandHandler('set_dls', set_dls), CommandHandler('set_mls', set_mls)],
