@@ -57,8 +57,16 @@ def set_dls(bot, update):
             reply_markup=ReplyKeyboardMarkup(reply, one_time_keyboard=True),
         )
         return SET_DLS
-    elif float(message) in reply[0]:
-        print("Present")
+    try:
+        message = float(message)
+    except:
+        update.message.reply_text(
+            text="Invalid Input For LotSize.",
+            reply_markup=ReplyKeyboardRemove()
+        )
+        return ConversationHandler.END
+    
+    if message in reply[0]:
         chat_id = update.message.from_user["id"]
         user = BotUser.retrieve(chat_id)
         user._dls = float(message)
@@ -69,30 +77,21 @@ def set_dls(bot, update):
         )
         return ConversationHandler.END
     else:
-        #float(message)
-        try:
-            message = float(message)
-            if message not in range(0.01, 101):
-                update.message.reply_text(
-                    text="LotSize must be between 0.01 and 100 both inclusive.",
-                    reply_markup=ReplyKeyboardRemove()
-                )
-                return ConversationHandler.END
-            chat_id = update.message.from_user["id"]
-            user = BotUser.retrieve(chat_id)
-            user._dls = message
-            user.save()
+        if message<0.01 or message > 100:
             update.message.reply_text(
-                text="Successfully updated default lot size for trades. enter /details to see your details.",
+                text="LotSize must be between 0.01 and 100 both inclusive.",
                 reply_markup=ReplyKeyboardRemove()
             )
             return ConversationHandler.END
-        except:
-            update.message.reply_text(
-                text="Invalid Value For LotSize Entered.",
-                reply_markup=ReplyKeyboardRemove()
-            )
-            return ConversationHandler.END
+        chat_id = update.message.from_user["id"]
+        user = BotUser.retrieve(chat_id)
+        user._dls = message
+        user.save()
+        update.message.reply_text(
+            text="Successfully updated default lot size for trades. enter /details to see your details.",
+            reply_markup=ReplyKeyboardRemove()
+        )
+        return ConversationHandler.END
 
 def start(bot, update):
     user = update.message.from_user
