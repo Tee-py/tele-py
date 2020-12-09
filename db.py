@@ -99,10 +99,10 @@ class DataBase:
 
     def retrieve_collection(self, collection_name):
         if not self.collection_exist(collection_name):
-            print(f"Collection: {collection_name} does not Exist In the Database")
+            #print(f"Collection: {collection_name} does not Exist In the Database")
             return False
         data = list(filter(lambda obj:list(obj.keys())[0] == collection_name, self.load()))[0]
-        print(f"Collection: {collection_name} retrieved from DataBase Successfully")
+        #print(f"Collection: {collection_name} retrieved from DataBase Successfully")
         return data[collection_name]
         
     def delete_collection(self, collection_name):

@@ -10,9 +10,10 @@ SET_MLS = 1
 def broadcast_message(bot, update):
     message = update.message.text
     all_users = User.db.retrieve_collection("User")
+    text = f"NEW SIGNAL UPDATE 💰📶🔊📣🚀‼️‼️\n\n{message}"
     for user in all_users:
         if user["signal_enabled"]:
-            bot.send_message(chat_id=user["chat_id"], text=message)
+            bot.send_message(chat_id=user["chat_id"], text=text)
 
 def disable_updates(bot, update):
     chat_id = update.message.from_user["id"]
