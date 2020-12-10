@@ -13,6 +13,14 @@
                 "id": "5c2109f9-d95d-444f-b8fc-71486dcbf221",
                 "chat_id": 1256735190,
                 "name": "Tee-py",
+                "default_lot_size": 10.0,
+                "max_loss_per_trade": 300.0,
+                "signal_enabled": true
+            },
+            {
+                "id": "96aceede-77e2-4825-9464-1b6c288bc79b",
+                "chat_id": 385705779,
+                "name": "Mofeoluwa",
                 "default_lot_size": null,
                 "max_loss_per_trade": null,
                 "signal_enabled": true
