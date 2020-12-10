@@ -1,6 +1,5 @@
 # Byte-compiled / optimized / DLL files
 .__pycache__/
-.db.json
 *.py[cod]
 *$py.class
 
@@ -15,7 +14,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-db.json
 lib/
 lib64/
 parts/
@@ -131,6 +129,7 @@ venv.bak/
 .mypy_cache/
 .dmypy.json
 dmypy.json
+db.json
 
 # Pyre type checker
 .pyre/
