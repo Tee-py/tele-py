@@ -7,6 +7,7 @@ import os
 
 SET_DLS = 0
 SET_MLS = 1
+START = 2
 PORT = int(os.environ.get('PORT', 5000))
 TOKEN = "1493141557:AAGnv-iBr-AF9-AsfWoz-9GXqDNub_WKlrw"
 
@@ -126,32 +127,46 @@ def set_mls(bot, update):
 
 def start(bot, update):
     user = update.message.from_user
-    print(update.message.text)
+    #print(update.message.text)
+    message = update.message.text
     if User.chat_id_exists(user["id"]):
         text = f"""
         Welcome, {user["first_name"]} 👋 🎉.\nYour Details exists in our DataBase 🥳.\n\nType / to see the list of commands 🛠 and their uses.
         """
         update.message.reply_text(text=text)
+        return ConversationHandler.END
     else:
-        to_store = BotUser(name=user["first_name"], chat_id=user["id"])
-        to_store.save()
-        text = f"""
-        Welcome, {user["first_name"]} 👋 🎉 🎉.\nYour Details have now been stored in our database 🥳.\nYou are now able to receive Forex Signals sent to the Signal Group 🚀🚀.\n\nType / to see the lists of commands 🛠 and their uses."""
-        update.message.reply_text(text=text)
+        if message ="/start":
+            text = f"Welcome {user["first_name"]}👋. Please Enter passcode 🔑 to start receiving signal updates."
+            update.message.reply_text(text=text)
+            return START
+        if message = os.environ.get('KEY'):
+
+            to_store = BotUser(name=user["first_name"], chat_id=user["id"])
+            to_store.save()
+            text = f"""
+            Welcome, {user["first_name"]} 👋 🎉 🎉.\nYour Details have now been stored in our database 🥳.\nYou are now able to receive Forex Signals sent to the Signal Group 🚀🚀.\n\nType / to see the lists of commands 🛠 and their uses."""
+            update.message.reply_text(text=text)
+        else:
+            text = f"Invalid Passcode ❌. Contact Admin For Passcode."
+            update.message.reply_text(text=text)
+        return ConversationHandler.END
+
 
 def main():
     updater = Updater(TOKEN, use_context=False)
     dispatcher = updater.dispatcher
     conversational_handler = ConversationHandler(
-        entry_points=[CommandHandler('set_dls', set_dls), CommandHandler('set_mls', set_mls)],
+        entry_points=[CommandHandler('set_dls', set_dls), CommandHandler('set_mls', set_mls), CommandHandler('start', start)],
         states={
             SET_DLS: [MessageHandler(Filters.text, set_dls)],
-            SET_MLS: [MessageHandler(Filters.text, set_mls)]
+            SET_MLS: [MessageHandler(Filters.text, set_mls)],
+            START: [MessageHandler(Filters.text, start)]
         },
         fallbacks=[]
     )
     dispatcher.add_handler(MessageHandler(Filters.regex('(BUY|SELL|buy|sell|SL|TP|Buy|Sell)+'), broadcast_message))
-    dispatcher.add_handler(CommandHandler('start', start))
+    #dispatcher.add_handler(CommandHandler('start', start))
     dispatcher.add_handler(CommandHandler('enable', enable_updates))
     dispatcher.add_handler(CommandHandler('disable', disable_updates))
     dispatcher.add_handler(CommandHandler('details', get_details))
