@@ -9,7 +9,7 @@ SET_DLS = 0
 SET_MLS = 1
 START = 2
 PORT = int(os.environ.get('PORT', 5000))
-TOKEN = "1493141557:AAGnv-iBr-AF9-AsfWoz-9GXqDNub_WKlrw"
+TOKEN = os.environ.get('TOKEN')
 
 def broadcast_message(bot, update):
     message = update.message.text
@@ -135,22 +135,23 @@ def start(bot, update):
         """
         update.message.reply_text(text=text)
         return ConversationHandler.END
-    else:
-        if message ="/start":
-            text = f"Welcome {user["first_name"]}👋. Please Enter passcode 🔑 to start receiving signal updates."
-            update.message.reply_text(text=text)
-            return START
-        if message = os.environ.get('KEY'):
-
-            to_store = BotUser(name=user["first_name"], chat_id=user["id"])
-            to_store.save()
-            text = f"""
-            Welcome, {user["first_name"]} 👋 🎉 🎉.\nYour Details have now been stored in our database 🥳.\nYou are now able to receive Forex Signals sent to the Signal Group 🚀🚀.\n\nType / to see the lists of commands 🛠 and their uses."""
-            update.message.reply_text(text=text)
-        else:
-            text = f"Invalid Passcode ❌. Contact Admin For Passcode."
-            update.message.reply_text(text=text)
+    
+    elif message == "/start":
+        text = f"Welcome {user["first_name"]}👋. Please Enter passcode 🔑 to start receiving signal updates."
+        update.message.reply_text(text=text)
+        return START 
+    elif message == os.environ.get('KEY'):
+        to_store = BotUser(name=user["first_name"], chat_id=user["id"])
+        to_store.save()
+        text = f"""
+        Welcome, {user["first_name"]} 👋 🎉 🎉.\nYour Details have now been stored in our database 🥳.\nYou are now able to receive Forex Signals sent to the Signal Group 🚀🚀.\n\nType / to see the lists of commands 🛠 and their uses."""
+        update.message.reply_text(text=text)
         return ConversationHandler.END
+    else:
+        text = f"Invalid Passcode ❌. Contact Admin For Passcode."
+        update.message.reply_text(text=text)
+        return ConversationHandler.END
+        
 
 
 def main():
