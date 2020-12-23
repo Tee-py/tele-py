@@ -6,6 +6,8 @@ from db import DataBase, User
 
 REGISTER = 0
 
+TOKEN = os.environ.get("TOKEN-2")
+
 
 def get_image_url()->str:
     allowed_extension = ['jpg','jpeg','png']

@@ -152,8 +152,6 @@ def start(bot, update):
         update.message.reply_text(text=text)
         return ConversationHandler.END
         
-
-
 def main():
     updater = Updater(TOKEN, use_context=False)
     dispatcher = updater.dispatcher
