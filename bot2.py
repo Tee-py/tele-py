@@ -2,10 +2,13 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, Conve
 import re
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
 from db import DataBase, User, BotUser
+import os
 
 
 SET_DLS = 0
 SET_MLS = 1
+PORT = int(os.environ.get('PORT', 5000))
+TOKEN = "1493141557:AAGnv-iBr-AF9-AsfWoz-9GXqDNub_WKlrw"
 
 def broadcast_message(bot, update):
     message = update.message.text
@@ -137,7 +140,7 @@ def start(bot, update):
         update.message.reply_text(text=text)
 
 def main():
-    updater = Updater("KEY", use_context=False)
+    updater = Updater(TOKEN, use_context=False)
     dispatcher = updater.dispatcher
     conversational_handler = ConversationHandler(
         entry_points=[CommandHandler('set_dls', set_dls), CommandHandler('set_mls', set_mls)],
@@ -153,7 +156,10 @@ def main():
     dispatcher.add_handler(CommandHandler('disable', disable_updates))
     dispatcher.add_handler(CommandHandler('details', get_details))
     dispatcher.add_handler(conversational_handler)
-    updater.start_polling()
+
+    #updater.start_polling()
+    updater.start_webhook(listen="0.0.0.0", port=int(PORT), url_path=TOKEN)
+    updater.bot.setWebhook('https://zizabot.herokuapp.com/' + TOKEN)  
     updater.idle()
 
 if __name__=="__main__":
