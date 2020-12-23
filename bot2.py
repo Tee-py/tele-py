@@ -137,11 +137,11 @@ def start(bot, update):
         return ConversationHandler.END
     
     elif message == "/start":
-        text = f"Welcome {user["first_name"]}👋. Please Enter passcode 🔑 to start receiving signal updates."
+        text = f"Welcome {user['first_name']}👋. Please Enter passcode 🔑 to start receiving signal updates."
         update.message.reply_text(text=text)
         return START 
     elif message == os.environ.get('KEY'):
-        to_store = BotUser(name=user["first_name"], chat_id=user["id"])
+        to_store = BotUser(name=user['first_name'], chat_id=user["id"])
         to_store.save()
         text = f"""
         Welcome, {user["first_name"]} 👋 🎉 🎉.\nYour Details have now been stored in our database 🥳.\nYou are now able to receive Forex Signals sent to the Signal Group 🚀🚀.\n\nType / to see the lists of commands 🛠 and their uses."""
