@@ -8,5 +8,6 @@ python-telegram-bot==13.0
 pytz==2020.4
 requests==2.25.0
 six==1.15.0
+telethon==1.18.2
 tornado==6.1
 tzlocal==2.1
