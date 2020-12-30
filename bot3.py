@@ -55,12 +55,13 @@ async def start(event):
                             "date": datetime.now(pytz.UTC)
                             }
                         }))
-                        await conv.send_message('Successfull.')
+                        await conv.send_message(f"""
+                        Welcome 👋 🎉 🎉.\nYour Details have now been stored in our database 🥳.\nYou are now able to receive Forex Signals sent to the Signal Group 🚀🚀.""")
                     except Exception as e:
-                        print(e) 
-                        await conv.send_message('An Error Occurred while saving your details.')            
+                        #print(e) 
+                        await conv.send_message('An Error Occurred while saving your details😞😭. Please Try Again.')            
             else:
-                await conv.send_message('Error.')
+                await conv.send_message(f"Invalid Passcode ❌. Contact Admin For Passcode.")
 
     except Exception as e:
         print(e)
