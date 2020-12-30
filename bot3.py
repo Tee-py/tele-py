@@ -18,13 +18,13 @@ def forward_messages_to_users(id_list, message):
         print("Forwarded")
 
 @client.on(events.NewMessage)
-async def main(event):
+async def broadcast(event):
     message = event.original_update.message
     #entity = client.get_entity("385705779")
     #res = await message.forward_to(entity)
     await client.send_message('385705779', 'Yello to myself!')
     print(message.message)
-    print(message.media)
+    #print(message.media)
     #forward_message_to_users(id_list, message)
     #print('{}'.format(event))
     #entity = client.get_entity(some_id)
