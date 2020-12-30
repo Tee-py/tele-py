@@ -3,6 +3,7 @@ certifi==2020.11.8
 cffi==1.14.3
 cryptography==3.2.1
 decorator==4.4.2
+faunadb==4.0.1
 pycparser==2.20
 python-telegram-bot==13.0
 pytz==2020.4
