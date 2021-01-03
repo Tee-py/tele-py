@@ -5,6 +5,7 @@ from faunadb.objects import Ref
 from faunadb.client import FaunaClient
 from datetime import datetime
 import pytz
+import re
 
 api_id = 2342197
 api_hash = "df090ff21d4f144a373f65f1f77873f3"
@@ -13,18 +14,23 @@ client = TelegramClient(phone, api_id, api_hash)
 fauna_client = FaunaClient(secret="fnAD-TjtVUACCNpkor-UvokJnvfq9DrZS8dTC8eQ")
 
 
-@client.on(events.NewMessage(pattern="Hello"))
+@client.on(events.NewMessage(pattern=re.compile(r"(sell|buy)+", re.I)))
 async def broadcast(event):
+    #Get the Signal
     message = event.original_update.message
+    try:
+        c_id = message.peer_id.channel_id
+        print(c_id)
+        message = message.message
+    except:
+        pass
     all_subscribers = fauna_client.query(
         q.paginate(q.documents(q.collection('users')))
     )
     for subscriber in all_subscribers['data']:
-        #print('Hello')
         user = fauna_client.query(q.get(q.ref(q.collection("users"), subscriber.__dict__["value"]["id"])))
-        #print(user)
-        print(user["data"]["chat_id"])
-        await client.send_message(user["data"]["chat_id"], "Testing Signals Feature")  
+        text = f"NEW SIGNAL UPDATE 💰📶🔊📣🚀‼️‼️\n\n{message}"
+        await client.send_message(user["data"]["chat_id"], text)  
 
 @client.on(events.NewMessage(pattern="start"))
 async def start(event):
