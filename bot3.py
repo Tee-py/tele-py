@@ -12,18 +12,32 @@ phone = '+2348156269921'
 client = TelegramClient(phone, api_id, api_hash)
 fauna_client = FaunaClient(secret="fnAD-TjtVUACCNpkor-UvokJnvfq9DrZS8dTC8eQ")
 
-def forward_messages_to_users(id_list, message):
-    for user_id in id_list:
+async def forward_messages_to_users(lst, text):
+    for user in lst:
+        user = fauna_client.query(q.get(q.ref(q.collection("users"), user.id())))
+        print(user["data"]["id"])
+        await client.send_message(user["data"]["id"], "Testing Signals Feature") 
         message.forward_to(user_id)
         print("Forwarded")
 
-@client.on(events.NewMessage)
+@client.on(events.NewMessage(pattern="Hello"))
 async def broadcast(event):
+    #print("I was called")
     message = event.original_update.message
+    #print(message)
+    all_subscribers = fauna_client.query(
+        q.paginate(q.documents(q.collection('users')))
+    )
+    print(fauna_client.query(q.get(q.ref(q.collection("users"), all_subscribers[0].id))))
+    for subscriber in all_subscribers['data']:
+        user = fauna_client.query(q.get(q.ref(q.collection("users"), first.__dict__["value"]["id"])))
+        #user = fauna_client.query(q.get(q.ref(q.collection("users"), subscriber.id())))
+        print(user["data"]["id"])
+        await client.send_message(user["data"]["id"], "Testing Signals Feature")  
     #entity = client.get_entity("385705779")
     #res = await message.forward_to(entity)
-    await client.send_message('385705779', 'Yello to myself!')
-    print(message.message)
+    #await client.send_message('385705779', 'Yello to myself!')
+    #print(message.message)
     #print(message.media)
     #forward_message_to_users(id_list, message)
     #print('{}'.format(event))
@@ -51,7 +65,7 @@ async def start(event):
                     try:
                         user = fauna_client.query(q.create(q.collection("users"), {
                             "data": {
-                            "id": sent_by_id,
+                            "chat_id": sent_by_id,
                             "date": datetime.now(pytz.UTC)
                             }
                         }))
@@ -67,7 +81,7 @@ async def start(event):
         print(e)
         print("This is not a user!!")
     #async with client.conversation(event.)
-
+"""
 with client:
     client.start()
     client.run_until_disconnected()
@@ -83,3 +97,17 @@ with client:
 #    client.send_code_request(phone)
 #    client.sign_in(phone, input('Enter the code: '))
 
+"""
+all_subscribers = fauna_client.query(
+    q.paginate(q.documents(q.collection('users')))
+)
+print(all_subscribers)
+first = all_subscribers["data"][0]
+#result = fauna_client.query(
+#  q.select("data", q.get(q.collection("users")))
+#)
+user = fauna_client.query(q.get(q.ref(q.collection("users"), first.__dict__["value"]["id"])))
+print(user)
+#print(result)
+#print(first)
+#print(fauna_client.query(q.get(q.ref(q.collection("users"), all_subscribers['data'][0].id))))
