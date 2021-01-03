@@ -12,13 +12,6 @@ phone = '+2348156269921'
 client = TelegramClient(phone, api_id, api_hash)
 fauna_client = FaunaClient(secret="fnAD-TjtVUACCNpkor-UvokJnvfq9DrZS8dTC8eQ")
 
-async def forward_messages_to_users(lst, text):
-    for user in lst:
-        user = fauna_client.query(q.get(q.ref(q.collection("users"), user.id())))
-        print(user["data"]["id"])
-        await client.send_message(user["data"]["id"], "Testing Signals Feature") 
-        message.forward_to(user_id)
-        print("Forwarded")
 
 @client.on(events.NewMessage(pattern="Hello"))
 async def broadcast(event):
