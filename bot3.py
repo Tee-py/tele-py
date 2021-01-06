@@ -6,12 +6,14 @@ from faunadb.client import FaunaClient
 from datetime import datetime
 import pytz
 import re
+import os
 
-api_id = 2342197
-api_hash = "df090ff21d4f144a373f65f1f77873f3"
-phone = '+2348156269921'
+api_id = int(os.environ.get('TELETHON_API_ID'))
+api_hash = os.environ.get('API_HASH')
+phone = os.environ.get('TELETHON_PHONE')
+secret = os.environ.get('FAUNA_SECRET_KEY')
 client = TelegramClient(phone, api_id, api_hash)
-fauna_client = FaunaClient(secret="fnAD-TjtVUACCNpkor-UvokJnvfq9DrZS8dTC8eQ")
+fauna_client = FaunaClient(secret=secret)
 
 
 @client.on(events.NewMessage(pattern=re.compile(r"(sell|buy)+", re.I)))
