@@ -120,8 +120,8 @@ def get_portfolio(bot, update):
         else:
             for token in tokens:
                 bsc_scan_url = f"https://bscscan.com/token/{token.contract_address}"
-                pk_url = f"https://info.julswap.com/token/{token.contract_address}"
-                jul_url = f"https://pancakeswap.info/token/{token.contract_address}"
+                jul_url = f"https://info.julswap.com/token/{token.contract_address}"
+                pk_url = f"https://pancakeswap.info/token/{token.contract_address}"
                 pc_url = f"https://poocoin.app/tokens/{token.contract_address}"
                 dx_url = f"https://dex.guru/token/{token.contract_address}-bsc"
                 #img_url = "https://bscscan.com/token/images/evdctoken_32.png"
