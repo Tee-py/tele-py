@@ -3,7 +3,7 @@
 from mongoengine import connect, Document, ListField, StringField, URLField, DictField, DecimalField
 
 
-connect(db="shc-port-db", host="localhost", port=27017)
+connect(db="shitcoin-db", host="mongodb+srv://teepy:mongo-teepy2021@teepycluster.ircf4.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 
 
 class Trader(Document):

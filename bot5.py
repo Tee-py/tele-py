@@ -27,6 +27,7 @@ from models2 import *
 
 TOKEN = "1712812245:AAGlUKRs15Ug5ojPrlijhPn0ZqYldORRWf8"
 ADD = 1
+PORT = int(os.environ.get('PORT', 5000))
 
 def start(bot, update):
     user = update.message.from_user
@@ -109,33 +110,34 @@ def get_portfolio(bot, update):
         Trader Not Found. Enter /start to register with the Bot.
         """
         update.message.reply_text(text=text)
-    tokens = Token.objects(owner_id=chat_id)
-    if len(tokens) == 0:
-        text = f"""
-        You have no Token in your portfolio. Enter /add to add a token.
-        """
-        update.message.reply_text(text=text)
     else:
-        for token in tokens:
-            bsc_scan_url = f"https://bscscan.com/token/{token.contract_address}"
-            pk_url = f"https://info.julswap.com/token/{token.contract_address}"
-            jul_url = f"https://pancakeswap.info/token/{token.contract_address}"
-            pc_url = f"https://poocoin.app/tokens/{token.contract_address}"
-            dx_url = f"https://dex.guru/token/{token.contract_address}-bsc"
-            #img_url = "https://bscscan.com/token/images/evdctoken_32.png"
-            text = f"Token Name: {token.name}\n\nConract Address: {token.contract_address}\n\nEntry: {token.entry_price}"
-            markup = [
-                [InlineKeyboardButton("BSC scan 🚀", url=bsc_scan_url), 
-                    InlineKeyboardButton("PancakeSwap 📈", url=pk_url),
-                    InlineKeyboardButton("JulSwap 📈", url=jul_url)
-                ], 
-                [InlineKeyboardButton("Poocoin 💹", url=pc_url), InlineKeyboardButton("Dex Guru 🚀", url=dx_url)], 
-                [InlineKeyboardButton("Delete Token 🚮", callback_data=f"d={token.id}")]
-            ]
-            #bot.send_photo(
-            #    chat_id=chat_id, caption=text, photo=img_url, reply_markup=InlineKeyboardMarkup(markup))
-            bot.send_message(chat_id=int(chat_id), text=text, reply_markup=InlineKeyboardMarkup(markup))
-            print(token.name, token.id)
+        tokens = Token.objects(owner_id=chat_id)
+        if len(tokens) == 0:
+            text = f"""
+            You have no Token in your portfolio. Enter /add to add a token.
+            """
+            update.message.reply_text(text=text)
+        else:
+            for token in tokens:
+                bsc_scan_url = f"https://bscscan.com/token/{token.contract_address}"
+                pk_url = f"https://info.julswap.com/token/{token.contract_address}"
+                jul_url = f"https://pancakeswap.info/token/{token.contract_address}"
+                pc_url = f"https://poocoin.app/tokens/{token.contract_address}"
+                dx_url = f"https://dex.guru/token/{token.contract_address}-bsc"
+                #img_url = "https://bscscan.com/token/images/evdctoken_32.png"
+                text = f"Token Name: {token.name}\n\nConract Address: {token.contract_address}\n\nEntry: {token.entry_price}"
+                markup = [
+                    [InlineKeyboardButton("BSC scan 🚀", url=bsc_scan_url), 
+                        InlineKeyboardButton("PancakeSwap 📈", url=pk_url),
+                        InlineKeyboardButton("JulSwap 📈", url=jul_url)
+                    ], 
+                    [InlineKeyboardButton("Poocoin 💹", url=pc_url), InlineKeyboardButton("Dex Guru 🚀", url=dx_url)], 
+                    [InlineKeyboardButton("Delete Token 🚮", callback_data=f"d={token.id}")]
+                ]
+                #bot.send_photo(
+                #    chat_id=chat_id, caption=text, photo=img_url, reply_markup=InlineKeyboardMarkup(markup))
+                bot.send_message(chat_id=int(chat_id), text=text, reply_markup=InlineKeyboardMarkup(markup))
+                print(token.name, token.id)
 
 def button_callback(bot, update):
     chat_id = update.effective_chat.id
