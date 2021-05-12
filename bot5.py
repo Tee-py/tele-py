@@ -169,17 +169,17 @@ def main():
     dispatcher.add_handler(conversational_handler)
     dispatcher.add_handler(CallbackQueryHandler(button_callback))
 
-    #updater.start_polling()
+    updater.start_polling()
     #updater.start_webhook(listen="0.0.0.0",
     #                      port=int(PORT),
     #                      url_path=TOKEN)
     #updater.bot.setWebhook('https://zizabot.herokuapp.com/' + TOKEN)
-    updater.start_webhook(
-        listen="0.0.0.0", 
-        port=int(PORT), 
-        url_path=TOKEN,
-        webhook_url=f"https://zizabot.herokuapp.com/{TOKEN}",
-    )  
+    #updater.start_webhook(
+    #    listen="0.0.0.0", 
+    #    port=int(PORT), 
+    #    url_path=TOKEN,
+    #    webhook_url=f"https://zizabot.herokuapp.com/{TOKEN}",
+    #)  
     updater.idle()
 
 if __name__=="__main__":
