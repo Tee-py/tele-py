@@ -27,7 +27,7 @@ from models2 import *
 
 TOKEN = "1712812245:AAGlUKRs15Ug5ojPrlijhPn0ZqYldORRWf8"
 ADD = 1
-PORT = int(os.environ.get('PORT', 5000))
+PORT = 5000
 
 def start(bot, update):
     user = update.message.from_user
