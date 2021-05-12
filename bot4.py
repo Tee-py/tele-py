@@ -74,7 +74,7 @@ def get_events(bot, update):
         text = f"UPCOMING EVENTS 🚀🚀🚀‼️‼️\n\n"
         print(timelines)
         for event in timelines:
-            text += f"\nDATE: {timelines[1]['date']}\nTITLE: {timelines[1]['title']}\n"
+            text += f"\nDATE: {event['date']}\nTITLE: {event['title']}\n"
         update.message.reply_text(text=text)
     except Exception as e:
         print(e)
