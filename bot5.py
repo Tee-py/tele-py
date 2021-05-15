@@ -27,8 +27,21 @@ from models2 import *
 
 TOKEN = "1712812245:AAGlUKRs15Ug5ojPrlijhPn0ZqYldORRWf8"
 ADD = 1
+STATS = 2
 PORT = os.getenv("PORT")
 
+def get_token_details(contract_address):
+    if not contract_address:
+        return None
+    response = requests.get(f"https://api.pancakeswap.info/api/v2/tokens/{contract_address}")
+    response = response.json()
+    if "error" in response:
+        #print(response)
+        return None
+    #print(response)
+    return response["data"]
+
+    
 def start(bot, update):
     user = update.message.from_user
     chat_id = str(user["id"])
@@ -68,23 +81,28 @@ def add_token(bot, update):
 
     message = update.message.text
     if message == "/add":
-        text = f"Enter 'CA, name, entry_price' to add a token to your portfolio \n\n(e.g: 0x2456789767, HuskyMeme, 0.123)."
+        text = f"Enter 'CA, total_amount_bought(Dollars)' to add a token to your portfolio \n\n(e.g: 0x2456789767, 100)."
         update.message.reply_text(text=text)
         return ADD 
     
     else:
         try:
             to_list = message.split(", ")
-            if len(to_list) < 3:
+            if len(to_list) < 2:
                 text = f"Incomplete Input ❌. Try Again."
                 update.message.reply_text(text=text)
                 return ADD
-            
+            details = get_token_details(to_list[0])
+            if not details:
+                text = f"Token with CA({to_list[0]}) not Found❌. Please Try Again."
+                update.message.reply_text(text=text)
+                return ADD
+
             token_dict = {
                 "owner_id": chat_id,
                 "contract_address": to_list[0],
-                "name": to_list[1],
-                "entry_price": float(to_list[2])
+                "name": details["name"],
+                "entry_price": float(to_list[1])
             }
             matching_tokens = Token.objects(contract_address=token_dict['contract_address'])
             if not matching_tokens:
@@ -97,6 +115,33 @@ def add_token(bot, update):
         except Exception as e:
             print(f"An Error Occured: {e}")
             text = f"An Error Occured while Trying to Add Token ❌. Please Try Again."
+            update.message.reply_text(text=text)
+            return ConversationHandler.END
+
+def get_stats(bot, update):
+    
+    message = update.message.text
+    if message == "/stats":
+        text = f"Enter Admin Passcode To View stats."
+        update.message.reply_text(text=text)
+        return STATS
+    
+    else:
+        try:
+            if message != "dev@teepy2021":
+                text = f"Wrong Passcode❌."
+                update.message.reply_text(text=text)
+                return ConversationHandler.END
+
+            tokens = Token.objects()
+            traders = Trader.objects()
+            text = f"Total Traders: {len(traders)}\n\nTotal Tokens: {len(tokens)}"
+            #text = f"✅ Token Successfully Added."
+            update.message.reply_text(text=text)
+            return ConversationHandler.END
+        except Exception as e:
+            print(f"An Error Occured: {e}")
+            text = f"An Error Occured while Fetching Stats ❌. {e}."
             update.message.reply_text(text=text)
             return ConversationHandler.END
 
@@ -125,7 +170,7 @@ def get_portfolio(bot, update):
                 pc_url = f"https://poocoin.app/tokens/{token.contract_address}"
                 dx_url = f"https://dex.guru/token/{token.contract_address}-bsc"
                 #img_url = "https://bscscan.com/token/images/evdctoken_32.png"
-                text = f"Token Name: {token.name}\n\nConract Address: {token.contract_address}\n\nEntry: {token.entry_price}"
+                text = f"Token Name: {token.name}\n\nConract Address: {token.contract_address}\n\nAmount Invested: {token.entry_price}"
                 markup = [
                     [InlineKeyboardButton("BSC scan 🚀", url=bsc_scan_url), 
                         InlineKeyboardButton("PancakeSwap 📈", url=pk_url),
@@ -153,10 +198,10 @@ def main():
     updater = Updater(TOKEN, use_context=False)
     dispatcher = updater.dispatcher
     conversational_handler = ConversationHandler(
-        entry_points=[CommandHandler('add', add_token)],
+        entry_points=[CommandHandler('add', add_token), CommandHandler('stats', get_stats)],
         states={
             #SET_DLS: [MessageHandler(Filters.text, set_dls)],
-            #SET_MLS: [MessageHandler(Filters.text, set_mls)],
+            STATS: [MessageHandler(Filters.text, get_stats)],
             ADD: [MessageHandler(Filters.text, add_token)]
         },
         fallbacks=[]
